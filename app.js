@@ -37,5 +37,5 @@ for (var i = 0; i < data.test_bad.length; i++) {
   console.log("> ",classifier.classify(data.test_bad[i]));
 };
 
-var raw = JSON.stringify(classifier);
-console.log(raw)
+// var raw = JSON.stringify(classifier);
+// console.log(raw)

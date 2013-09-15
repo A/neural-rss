@@ -1,11 +1,16 @@
+// TODO: СОхрянять статьи в БД
 
-var FeedParser = require('feedparser')
+var startDate = +new Date()
+  , FeedParser = require('feedparser')
   , domain = require('domain')
   , mongoose = require('mongoose')
+  , db = mongoose.connect('mongodb://localhost/test')
+  , uniqueValidator = require('mongoose-unique-validator')
   , request = require('request')
-  , feeds = require('./feeds').feeds;
+  , feeds = require('./feeds').feeds
+  , articleSchema = mongoose.Schema(require('./article-schema')),
+  Article = mongoose.model('article', articleSchema.plugin(uniqueValidator, { mongoose: mongoose }));
 
-var startDate = +new Date();
 
 var parseFeed = function(i) {
   
@@ -16,6 +21,7 @@ var parseFeed = function(i) {
   }
 
   var feed = feeds[i];
+  console.log(' ');
   console.log('..... %s .....', feed);
 
   request({
@@ -23,13 +29,13 @@ var parseFeed = function(i) {
     timeout: 5000
   }, function(err) {
     if (err) {
-      console.log('request error');
+      console.log('> request error');
       parseFeed(--i);
     }
   })
   .pipe(new FeedParser())
   .on('error', function(error) {
-    console.log('feed error');
+    console.log('> feed error');
   })
   .on('meta', function (meta) {
     console.log('===== %s =====', meta.title);
@@ -37,12 +43,26 @@ var parseFeed = function(i) {
   .on('readable', function () {
     var stream = this, item;
     while (item = stream.read()) {
-      console.log('%s Got article: %s', item.date, item.title || item.description);
+      console.log('> %s Got article: %s', item.date, item.title || item.description);
+      saveArticle(item);
     }
   })
   .on('end', function () {
     parseFeed(--i);
   })
+};
+
+
+var saveArticle = function (content) {
+  if (typeof content !== 'object') { return; }
+  var article = new Article(content);
+  console.log('>> saving')
+
+  article.save(function (err) {
+    if (err && err.errors && err.errors.guid && err.errors.guid.type==='unique') { console.log('>> article already saved'); return; }// ...
+    console.log('>> saved');
+  });
+
 };
 
 parseFeed(feeds.length-1);

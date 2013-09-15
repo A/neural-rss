@@ -70,21 +70,6 @@
     "http://shipilev.livejournal.com/data/rss",
     "http://antihubbard.livejournal.com/data/rss",
     "http://vkontakte-feed.appspot.com/feed/japanese_underground/wall?foreign_posts=1&amp;big_photos=1",
-    "http://indie-yuuwaku.livejournal.com/data/rss",
-    "https://api.twitter.com/1/favorites.rss?screen_name=azproduction",
-    "https://api.twitter.com/1/favorites.rss?screen_name=curlybrace",
-    "https://api.twitter.com/1/favorites.rss?screen_name=joukov",
-    "https://api.twitter.com/1/favorites.rss?screen_name=ki_zu",
-    "https://api.twitter.com/1/favorites.rss?screen_name=matmuchrapna",
-    "https://api.twitter.com/1/favorites.rss?screen_name=maxt3r",
-    "https://api.twitter.com/1/favorites.rss?screen_name=miripiruni",
-    "https://api.twitter.com/1/favorites.rss?screen_name=mista_k",
-    "https://api.twitter.com/1/favorites.rss?screen_name=okhomenko",
-    "https://api.twitter.com/1/favorites.rss?screen_name=operatino",
-    "https://api.twitter.com/1/favorites.rss?screen_name=pepelsbey",
-    "https://api.twitter.com/1/favorites.rss?screen_name=ruGreLI",
-    "https://api.twitter.com/1/favorites.rss?screen_name=sapegin",
-    "https://api.twitter.com/1/favorites.rss?screen_name=yuliya_ru",
-    "http://kulakowka.com/feed/"
+    "http://indie-yuuwaku.livejournal.com/data/rss"
   ]
 }

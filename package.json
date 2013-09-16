@@ -11,5 +11,8 @@
     "feedparser": "~0.16.1",
     "shortcode-params": "~1.0.1",
     "nconf": "~0.6.7"
+  },
+  "devDependencies": {
+    "grunt-bg-shell": "~2.1.0"
   }
 }

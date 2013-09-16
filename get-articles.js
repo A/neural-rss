@@ -1,4 +1,4 @@
-// TODO: СОхрянять статьи в БД
+'use strict';
 
 var startDate = +new Date()
   , FeedParser = require('feedparser')
@@ -65,4 +65,8 @@ var saveArticle = function (content) {
 
 };
 
-parseFeed(feeds.length-1);
+var getArticles = function() {
+  parseFeed(feeds.length-1);
+};
+
+getArticles();

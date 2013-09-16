@@ -7,6 +7,10 @@
   },
   "dependencies": {
     "express": "3.3.7",
-    "jade": "*"
+    "jade": "*",
+    "grunt": "~0.4.1"
+  },
+  "devDependencies": {
+    "grunt-shell": "~0.3.1"
   }
 }

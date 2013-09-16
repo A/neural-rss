@@ -1,8 +1,12 @@
 'use strict';
-var express = require('express');
-var routes = require('./routes');
-var http = require('http');
-var path = require('path');
+var express = require('express')
+  , routes = require('./routes')
+  , path = require('path')
+  , stylus = require('connect-stylus');
+  
+  // OverwriteModelError: Cannot overwrite `article` model once compiled.
+  // , Articles = require('../get-articles'); 
+
 
 var app = express();
 
@@ -20,6 +24,17 @@ app.get('*', function(req, res, next){
   console.log('%s %s', req.method, req.url);
   next();
 });
+// Обработка ошибок
+app.use(function(err, req, res, next){
+    res.status(err.status || 500);
+    console.error('Internal error(%d): %s',res.statusCode,err.message);
+    res.send({ error: err.message });
+    return;
+});
+app.get('/css/style.css', stylus({
+  entry: './stylus/style.styl',
+  use: ['nib', 'normalize']
+}));
 
 // development only
 // if ('development' == app.get('env')) {
@@ -27,4 +42,7 @@ app.use(express.errorHandler());
 // }
 
 routes(app);
-app.listen(3000);
+
+app.listen(app.get('port'), function(){
+    console.log('Express server listening on port', app.get('port'));
+});

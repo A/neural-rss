@@ -1,5 +1,11 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  //- h1= title
+  .panel.panel-primary
+    .panel-heading My feed
+    .panel-body Awesome feeds bellow!..
+    ul.list-group
+    each item in items
+      li.list-group-item
+        a(href='#{item.link}') #{moment(item.date).format("DD.MM.YY HH:mm ")} — #{item.title}

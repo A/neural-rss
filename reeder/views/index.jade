@@ -8,4 +8,4 @@ block content
     ul.list-group
     each item in items
       li.list-group-item
-        a(href='#{item.link}') #{moment(item.date).format("DD.MM.YY HH:mm ")} — #{item.title}
+        a(href='/id/#{item._id}') #{moment(item.date).format("DD.MM.YY HH:mm")} — #{item.title}

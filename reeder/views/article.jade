@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .article-meta
+    h1.article-title= article.title
+    .article-menu
+      span= ' | '
+      a.article-link(href='#{article.link}') Посмотреть на сайте
+      span= ' | '
+      a.article-is-good(href='/good/#{article._id}') Интересно
+      span= ' | '
+      a.article-is-bad(href='/bad/#{article._id}') Отстой
+      span= ' | '
+  hr
+  .article-content!= article.summary || article.description
+  hr
+  a.article-link(href='#{article.link}')= article.link

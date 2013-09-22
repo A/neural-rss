@@ -18,10 +18,21 @@ module.exports = function(app) {
   app.get('/', function(req, res) {
 
     articles
-    .find({}, 'title link date')
-    .sort({date: -1})
-    .execFind(function (err, items) {
-      res.render('index', {items: items, moment: moment});
-    });
+      .find({}, 'title link date')
+      .sort({date: -1})
+      .execFind(function (err, items) {
+        res.render('index', {items: items, moment: moment});
+      });
+  });
+
+  // В http://expressjs.com/api.html#app.VERB хороший пример для размышлений с middleware. Здесь можно использовать middleware загрузки статей
+  app.get('/id/:id', function(req, res) {
+
+    articles
+      .find({_id: req.params.id}, function (err, article) {
+        article = article[0] // http://stackoverflow.com/questions/9931531/jade-template-with-variables-nodejs-server-side
+        res.render('article', {article: article});
+      });
+
   });
 };

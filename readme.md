@@ -1,3 +1,1 @@
-# Another RSS Client
-
-Comming Soon... (=
+This prototype contained ugly code only.

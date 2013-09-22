@@ -3,15 +3,13 @@ extends layout
 block content
   .article-meta
     h1.article-title= article.title
-    .article-menu
-      span= ' | '
-      a.article-link(href='#{article.link}') Посмотреть на сайте
-      span= ' | '
-      a.article-is-good(href='/good/#{article._id}') Интересно
-      span= ' | '
-      a.article-is-bad(href='/bad/#{article._id}') Отстой
-      span= ' | '
+  hr
+  .article-link
+    a(href='#{article.link}')= article.link
   hr
   .article-content!= article.summary || article.description
   hr
-  a.article-link(href='#{article.link}')= article.link
+  .article-menu
+    .btn-group.article-menu-items
+      a.article-is-good.btn.btn-success(href='/label/good/#{article._id}') Интересно
+      a.article-is-bad.btn.btn-danger(href='/label/bad/#{article._id}') Отстой

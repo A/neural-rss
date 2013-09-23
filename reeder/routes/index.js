@@ -37,6 +37,28 @@ module.exports = function(app) {
 
   });
 
+
+  app.get('/label/:label', function(req, res) {
+    
+    var label = req.params.label;
+
+    articles
+      .find({
+          labels: {
+            $elemMatch: {
+              label: label, 
+              value: { $gte: 0.6 } 
+            } 
+          } 
+        })
+      .sort({date:-1}) // Я не понял, как сортировать по лэйблу (т.е., полю value в массиве где есть наш label, хммм...)
+      .execFind(function (err, items) {
+        console.log(items);
+        res.render('index', {label: label, items: items, moment: moment});
+      });
+  });
+
+
   app.get('/label/:label/:id', function(req, res) {
     
     // Отправляем пользвателя на главную
@@ -86,11 +108,10 @@ var getClassifier = function(user, callback) {
       var __classifier;
 
       if (typeof classifier === 'undefined') {
-        // console.log('classifier is undefined');
+        console.log('classifier is undefined');
         __classifier = new natural.BayesClassifier(natural.PorterStemmerRu);
       } else {
         console.log('classifier restored');
-        // console.log(classifier);
         __classifier = natural.BayesClassifier.restore(JSON.parse(classifier.data));
       }
 
@@ -100,23 +121,42 @@ var getClassifier = function(user, callback) {
 };
 
 
-var saveClassifier = function(user, classifier) {
+var saveClassifier = function(user, newclassifier) {
   
-  var data = JSON.stringify(classifier);
-  console.log(classifier)
-  classifiers.update({user: user}, {user: user, data: classifier}, function(err) {
-    !err && console.log('fuck yeah')
+  var data = JSON.stringify(newclassifier);
+  // console.log(classifier)
+  classifiers.find({user: user}, function(err, classifier) {
+
+    // if exists
+    if (classifier && classifier[0]) {
+      classifiers.update({user: user}, {user: user, data: data}, function(err) {
+        console.log('save');
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Classifier saved without errors!')
+        } 
+      });
+
+    // else create
+    } else {
+      console.log('create');
+      var createdclassifier = new classifiers({
+        user: user,
+        data: data
+      });
+      
+      createdclassifier.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Classifier created without errors!')
+        } 
+
+      });
+
+    }
+
   });
-
-
-  // var __classifier = new classifiers({
-    // user: user,
-    // data: data
-  // });
-  
-  // __classifier.save(function (err) {
-    // var str = (err)?err:'classifier saved';
-    // console.log(str);
-  // });
 
 };
